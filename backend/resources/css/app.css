@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 86% 97%; /* Cream background */
+    --foreground: 45 10% 20%; /* Dark gold text */
+    --card: 45 86% 97%; /* Cream cards */
+    --card-foreground: 45 10% 20%;
+    --popover: 45 86% 97%;
+    --popover-foreground: 45 10% 20%;
+    --primary: 45 86% 50%; /* Gold primary */
+    --primary-foreground: 45 10% 10%;
+    --secondary: 45 86% 90%; /* Light cream */
+    --secondary-foreground: 45 10% 20%;
+    --muted: 45 86% 90%;
+    --muted-foreground: 45 10% 40%;
+    --accent: 45 86% 80%; /* Accent gold */
+    --accent-foreground: 45 10% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 45 86% 85%;
+    --input: 45 86% 85%;
+    --ring: 45 86% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 45 10% 10%; /* Dark gold background */
+    --foreground: 45 86% 97%; /* Cream text */
+    --card: 45 10% 15%; /* Dark gold cards */
+    --card-foreground: 45 86% 97%;
+    --popover: 45 10% 15%;
+    --popover-foreground: 45 86% 97%;
+    --primary: 45 86% 60%; /* Bright gold */
+    --primary-foreground: 45 10% 10%;
+    --secondary: 45 10% 20%;
+    --secondary-foreground: 45 86% 97%;
+    --muted: 45 10% 20%;
+    --muted-foreground: 45 86% 80%;
+    --accent: 45 10% 25%;
+    --accent-foreground: 45 86% 97%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 45 10% 25%;
+    --input: 45 10% 25%;
+    --ring: 45 86% 60%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}

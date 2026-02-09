@@ -23,7 +23,6 @@ const phoneIcon = new L.Icon({
 
 // Custom icon for live tracking (pulsing blue dot)
 const liveTrackingIcon = L.divIcon({
-  html: '<div class="live-marker"><div class="pulse"></div></div>',
   iconSize: [32, 32],
   iconAnchor: [16, 16],
   className: 'live-tracking-marker',

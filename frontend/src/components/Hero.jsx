@@ -10,11 +10,10 @@ const Hero = () => {
 
       <div className="hero-overlay">
         <div className="hero-content">
-          <h1 className="hero-title">Track your company vehicles & save like a Pro</h1>
+          <h1 className="hero-title">GoldFleet Management Services</h1>
           <p className="hero-sub">Cloud-based vehicle tracking and fleet management software</p>
           <div className="hero-actions">
-            <a href="/login" className="hero-cta">Login</a>
-            <button className="hero-secondary">Contact sales →</button>
+            <a href="/login" className="hero-cta">Login / Sign up</a>
           </div>
         </div>
       </div>

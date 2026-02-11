@@ -53,7 +53,7 @@ const LandingPage = () => {
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               {/* Feature Card 1 */}
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center text-center">
                 {/* Icon Placeholder */}
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-yellow-600">
                   <svg
@@ -82,15 +82,14 @@ const LandingPage = () => {
                   Real-time vehicle tracking and live status updates
                 </dd>
                 <a
-                  href="#"
                   className="mt-4 text-sm font-semibold leading-6 text-yellow-600 hover:text-yellow-700 transition-colors"
                 >
-                  Vehicle tracking <span aria-hidden="true">→</span>
+                  Vehicle tracking <span aria-hidden="true"></span>
                 </a>
               </div>
 
               {/* Feature Card 2 */}
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center text-center">
                 {/* Icon Placeholder */}
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-amber-600">
                   <svg
@@ -114,15 +113,14 @@ const LandingPage = () => {
                   Monitor and analyze driving behavior to reduce costs
                 </dd>
                 <a
-                  href="#"
                   className="mt-4 text-sm font-semibold leading-6 text-amber-600 hover:text-amber-700 transition-colors"
                 >
-                  Fleet optimization <span aria-hidden="true">→</span>
+                  Fleet optimization <span aria-hidden="true"></span>
                 </a>
               </div>
 
               {/* Feature Card 3 */}
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-center text-center">
                 {/* Icon Placeholder */}
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-yellow-700">
                   <svg
@@ -146,10 +144,9 @@ const LandingPage = () => {
                   Seamlessly connects with current software and hardware
                 </dd>
                 <a
-                  href="#"
                   className="mt-4 text-sm font-semibold leading-6 text-yellow-700 hover:text-yellow-800 transition-colors"
                 >
-                  System integration <span aria-hidden="true">→</span>
+                  System integration <span aria-hidden="true"></span>
                 </a>
               </div>
             </dl>
@@ -171,7 +168,7 @@ const LandingPage = () => {
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
               {/* Feature Block 1 */}
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center text-center">
                 {/* Icon Placeholder */}
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-600">
                   <svg
@@ -197,7 +194,7 @@ const LandingPage = () => {
               </div>
 
               {/* Feature Block 2 */}
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center text-center">
                 {/* Icon Placeholder */}
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-600">
                   <svg
@@ -251,7 +248,7 @@ const LandingPage = () => {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-semibold text-gray-900">Sarah Johnson</div>
+                    <div className="text-sm font-semibold text-gray-900">Ama Serwaa</div>
                     <div className="text-sm text-gray-600">Operations Manager</div>
                   </div>
                 </div>
@@ -275,7 +272,7 @@ const LandingPage = () => {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-semibold text-gray-900">Michael Chen</div>
+                    <div className="text-sm font-semibold text-gray-900">Michael Acheampong</div>
                     <div className="text-sm text-gray-600">Fleet Director</div>
                   </div>
                 </div>
@@ -299,7 +296,7 @@ const LandingPage = () => {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-semibold text-gray-900">Emily Rodriguez</div>
+                    <div className="text-sm font-semibold text-gray-900">Nii </div>
                     <div className="text-sm text-gray-600">Logistics Coordinator</div>
                   </div>
                 </div>
@@ -319,15 +316,12 @@ const LandingPage = () => {
       <footer className="bg-gray-900 text-white">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           <div className="text-center">
-            <h3 className="text-lg font-semibold">Ready to optimize your fleet?</h3>
-            <p className="mt-2 text-gray-400">Join thousands of companies already using Gold Fleet</p>
+            <h3 className="text-lg font-semibold">Are you ready to optimize your fleet?</h3>
+            <p className="mt-2 text-gray-400">Join the list of companies already using Gold Fleet</p>
             <div className="mt-6 flex items-center justify-center gap-x-6">
-              <button className="rounded-md bg-yellow-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-yellow-700 transition-all duration-200 transform hover:scale-105">
-                Start free trial
-              </button>
-              <button className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors">
-                Schedule demo <span aria-hidden="true">→</span>
-              </button>
+              <a href="/login?tab=signup" className="rounded-md bg-yellow-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-yellow-700 transition-all duration-200 transform hover:scale-105">
+                Sign up
+              </a>
             </div>
           </div>
         </div>

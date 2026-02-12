@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 export default function Expenses() {
   const [expenses, setExpenses] = useState([]);
@@ -78,7 +79,7 @@ export default function Expenses() {
               {expenses.map((expense) => (
                 <tr key={expense.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm text-gray-900">{expense.category || '-'}</td>
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">${expense.amount || '0.00'}</td>
+                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{formatCurrency(expense.amount)}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{expense.expense_date || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600 truncate">{expense.description || '-'}</td>
                   <td className="px-6 py-4 text-sm space-x-2">

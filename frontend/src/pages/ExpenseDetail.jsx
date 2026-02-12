@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 export default function ExpenseDetail() {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ export default function ExpenseDetail() {
             </div>
             <div className="pt-2 border-t border-gray-200">
               <p className="text-sm font-medium text-gray-600">Amount</p>
-              <p className="text-3xl font-bold text-green-600 mt-1">${parseFloat(expense.amount || 0).toFixed(2)}</p>
+              <p className="text-3xl font-bold text-green-600 mt-1">{formatCurrency(expense.amount)}</p>
             </div>
           </div>
         </div>

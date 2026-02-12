@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ChartComponent from '../components/ChartComponent';
 import { api } from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 // Skeleton Loader Component
 function SkeletonLoader() {
@@ -79,7 +80,7 @@ export default function InfoDashboard() {
 
         <div className="bg-white rounded-lg shadow p-5">
           <div className="text-gray-500 text-sm font-medium">Monthly Expenses (sum)</div>
-          <div className="mt-2 text-3xl font-bold text-gray-900">${stats.monthlyExpenses ? Object.values(stats.monthlyExpenses).reduce((a,b)=>a+Number(b||0),0).toFixed(2) : 0}</div>
+          <div className="mt-2 text-3xl font-bold text-gray-900">{formatCurrency(stats.monthlyExpenses ? Object.values(stats.monthlyExpenses).reduce((a,b)=>a+Number(b||0),0) : 0)}</div>
           <div className="mt-1 text-sm text-gray-500">This year</div>
         </div>
       </div>

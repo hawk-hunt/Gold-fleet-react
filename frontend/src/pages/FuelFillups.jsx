@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 export default function FuelFillups() {
   const [fillups, setFillups] = useState([]);
@@ -80,7 +81,7 @@ export default function FuelFillups() {
                   <td className="px-6 py-4 text-sm text-gray-900">{fillup.vehicle?.license_plate || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{fillup.fillup_date || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{fillup.gallons || '-'} gal</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">${fillup.cost || '-'}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{formatCurrency(fillup.cost)}</td>
                   <td className="px-6 py-4 text-sm space-x-2">
                     <Link
                       to={`/fuel-fillups/${fillup.id}`}

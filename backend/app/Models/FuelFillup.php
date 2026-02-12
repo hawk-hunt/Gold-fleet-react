@@ -18,6 +18,7 @@ class FuelFillup extends Model
         'cost_per_gallon',
         'cost',
         'odometer_reading',
+        'mpg',
         'fillup_date',
     ];
 
@@ -26,8 +27,40 @@ class FuelFillup extends Model
         'cost_per_gallon' => 'decimal:3',
         'cost' => 'decimal:2',
         'odometer_reading' => 'decimal:2',
+        'mpg' => 'decimal:2',
         'fillup_date' => 'date',
     ];
+
+    protected static function booted()
+    {
+        // Compute MPG automatically before saving a fillup when possible
+        static::saving(function (FuelFillup $fillup) {
+            $odometer = $fillup->odometer_reading ?? null;
+            $gallons = $fillup->gallons ?? 0;
+
+            if ($fillup->vehicle_id && $odometer !== null && $gallons > 0) {
+                $prev = self::where('vehicle_id', $fillup->vehicle_id)
+                    ->where(function ($q) use ($fillup) {
+                        if ($fillup->fillup_date) {
+                            $q->where('fillup_date', '<=', $fillup->fillup_date);
+                        }
+                    })
+                    ->where('id', '<>', $fillup->id ?? 0)
+                    ->whereNotNull('odometer_reading')
+                    ->orderBy('fillup_date', 'desc')
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+                $prevOdo = $prev->odometer_reading ?? null;
+                if ($prev && $prevOdo !== null) {
+                    $distance = floatval($odometer) - floatval($prevOdo);
+                    if ($distance > 0 && $gallons > 0) {
+                        $fillup->mpg = round($distance / floatval($gallons), 2);
+                    }
+                }
+            }
+        });
+    }
 
     public function company(): BelongsTo
     {

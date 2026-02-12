@@ -4,24 +4,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbars while keeping scroll functionality */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+html, body {
+  -ms-overflow-style: none;
+}
+
 @layer base {
   :root {
     font-family: 'Figtree', system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color-scheme: light dark;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #213547;
     background-color: #ffffff;
+    color: #333333;
   }
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  
   }
 
   html, body {

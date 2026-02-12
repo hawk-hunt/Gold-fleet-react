@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useFormValidation } from '../hooks/useFormValidation'
 
@@ -132,8 +132,6 @@ const AuthPage = () => {
     }
   }
 
-  const activeForm = isSignup ? signupForm : loginForm
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-amber-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -238,6 +236,12 @@ const AuthPage = () => {
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
+
+              <div className="text-center">
+                <Link to="/forgot-password" className="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
+                  Forgot your password?
+                </Link>
+              </div>
             </form>
           )}
 
@@ -259,7 +263,7 @@ const AuthPage = () => {
                       ? 'border-red-500 focus:ring-red-500'
                       : 'border-gray-300 focus:ring-yellow-600'
                   }`}
-                  placeholder="John Doe"
+                  placeholder="Enter your name"
                 />
                 {signupForm.errors.name && (
                   <p className="mt-1 text-sm text-red-600">{signupForm.errors.name}</p>
@@ -347,7 +351,7 @@ const AuthPage = () => {
                         ? 'border-red-500 focus:ring-red-500'
                         : 'border-gray-300 focus:ring-yellow-600'
                     }`}
-                    placeholder="Acme Corp"
+                    placeholder="Company Name"
                   />
                   {signupForm.errors.company_name && (
                     <p className="mt-1 text-sm text-red-600">{signupForm.errors.company_name}</p>
@@ -385,7 +389,7 @@ const AuthPage = () => {
                     value={signupForm.values.company_phone}
                     onChange={signupForm.handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholder="(555) 123-4567"
+                    placeholder="**********"
                   />
                 </div>
 
@@ -399,7 +403,7 @@ const AuthPage = () => {
                     value={signupForm.values.company_address}
                     onChange={signupForm.handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholder="123 Main St, City, State 12345"
+                    placeholder="St, City, Region"
                   />
                 </div>
               </div>

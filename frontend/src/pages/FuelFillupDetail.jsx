@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 export default function FuelFillupDetail() {
   const navigate = useNavigate();
@@ -122,12 +123,12 @@ export default function FuelFillupDetail() {
 
           <div>
             <h3 className="text-sm font-medium text-gray-500">Cost</h3>
-            <p className="text-lg text-gray-900">${parseFloat(fuelFillup.cost).toFixed(2)}</p>
+            <p className="text-lg text-gray-900">{formatCurrency(fuelFillup.cost)}</p>
           </div>
 
           <div>
             <h3 className="text-sm font-medium text-gray-500">Cost Per Gallon</h3>
-            <p className="text-lg text-gray-900">${costPerGallon}</p>
+            <p className="text-lg text-gray-900">{formatCurrency(costPerGallon)}</p>
           </div>
 
           <div>

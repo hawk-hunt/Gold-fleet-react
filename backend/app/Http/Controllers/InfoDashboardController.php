@@ -87,17 +87,46 @@ class InfoDashboardController extends Controller
                 ->limit(5)
                 ->get();
 
+            // Calculate derived metrics
+            $totalExpenses = Expense::where('company_id', $companyId)
+                ->whereYear('created_at', date('Y'))
+                ->sum('amount') ?? 0;
+
+            $totalCostOfOwnership = $totalExpenses + ($monthlyFuelCosts ? array_sum($monthlyFuelCosts) : 0);
+            
+            // Calculate average MPG from fuel fillups (computed from odometer deltas and gallons)
+            $averageMpg = FuelFillup::where('company_id', $companyId)
+                ->whereNotNull('mpg')
+                ->where('mpg', '>', 0)
+                ->avg('mpg') ?? 8.5;
+
+            // Downtime not tracked; use default 0
+            $downtimeDays = 0;
+
             return [
-                'totalVehicles' => $vehicleStats->total ?? 0,
-                'activeVehicles' => $vehicleStats->active ?? 0,
-                'totalDrivers' => $driverStats->total ?? 0,
-                'activeDrivers' => $driverStats->active ?? 0,
-                'totalTrips' => $tripStats->total ?? 0,
-                'completedTrips' => $tripStats->completed ?? 0,
-                'monthlyTrips' => $monthlyTrips,
-                'monthlyExpenses' => $monthlyExpenses,
-                'monthlyFuelCosts' => $monthlyFuelCosts,
-                'vehicleUtilization' => $vehicleUtilization,
+                'total_vehicles' => $vehicleStats->total ?? 0,
+                'active_vehicles' => $vehicleStats->active ?? 0,
+                'total_drivers' => $driverStats->total ?? 0,
+                'active_drivers' => $driverStats->active ?? 0,
+                'total_trips' => $tripStats->total ?? 0,
+                'completed_trips' => $tripStats->completed ?? 0,
+                'monthly_trips' => $monthlyTrips,
+                'monthly_expenses' => $monthlyExpenses,
+                'monthly_fuel_costs' => $monthlyFuelCosts,
+                'vehicle_utilization' => $vehicleUtilization,
+                'recent_issues' => $recentIssues,
+                'upcoming_services' => $upcomingServices,
+                'total_cost' => round($totalCostOfOwnership, 2),
+                'total_expenses' => round($totalExpenses, 2),
+                'avg_mpg' => round($averageMpg, 1),
+                'downtime_days' => round($downtimeDays, 1),
+                'cost_increase_percent' => 0,
+                'overdue_reminders' => 0,
+                'open_issues' => count($recentIssues),
+                'maintenance_queue' => 0,
+                'renewal_count' => 0,
+                'cost_per_mile' => round($tripStats->total > 0 ? $totalCostOfOwnership / $tripStats->total : 0, 2),
+                'cost_per_day' => round($totalCostOfOwnership / 30, 2),
                 'recentIssues' => $recentIssues,
                 'upcomingServices' => $upcomingServices,
             ];
@@ -113,15 +142,43 @@ class InfoDashboardController extends Controller
         
         // Cache chart data for 10 minutes to reduce query load
         $data = Cache::remember($cacheKey, 600, function() use ($companyId) {
-            $data['expenses'] = Expense::where('company_id', $companyId)
-                ->selectRaw('EXTRACT(MONTH FROM expense_date)::TEXT as period, SUM(amount) as value')
+            // Get monthly expenses
+            $expensesData = Expense::where('company_id', $companyId)
+                ->selectRaw('EXTRACT(MONTH FROM expense_date)::INTEGER as month, SUM(amount) as value')
                 ->whereYear('expense_date', date('Y'))
                 ->groupBy(DB::raw('EXTRACT(MONTH FROM expense_date)'))
                 ->orderBy(DB::raw('EXTRACT(MONTH FROM expense_date)'))
-                ->pluck('value', 'period')
-                ->toArray();
+                ->get();
 
-            return $data;
+            // Get monthly fuel costs (as revenue/income proxy for now)
+            $revenueData = FuelFillup::where('company_id', $companyId)
+                ->selectRaw('EXTRACT(MONTH FROM fillup_date)::INTEGER as month, SUM(cost) as value')
+                ->whereYear('fillup_date', date('Y'))
+                ->groupBy(DB::raw('EXTRACT(MONTH FROM fillup_date)'))
+                ->orderBy(DB::raw('EXTRACT(MONTH FROM fillup_date)'))
+                ->get();
+
+            // Build chart data with months as labels (Jan through Dec)
+            $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            $labels = [];
+            $expenses = [];
+            $revenue = [];
+
+            for ($i = 1; $i <= 12; $i++) {
+                $labels[] = $months[$i - 1];
+                
+                $expenseValue = $expensesData->where('month', $i)->first();
+                $expenses[] = $expenseValue ? (float) $expenseValue->value : 0;
+                
+                $revenueValue = $revenueData->where('month', $i)->first();
+                $revenue[] = $revenueValue ? (float) $revenueValue->value : 0;
+            }
+
+            return [
+                'labels' => $labels,
+                'expenses' => $expenses,
+                'revenue' => $revenue,
+            ];
         });
 
         return response()->json($data);

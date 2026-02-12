@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
+import { formatCurrency } from '../utils/formatters';
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -92,7 +93,7 @@ export default function Services() {
                       {service.status?.replace('_', ' ') || 'Pending'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">${service.cost || '-'}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{formatCurrency(service.cost)}</td>
                   <td className="px-6 py-4 text-sm space-x-2">
                     <Link
                       to={`/services/${service.id}`}

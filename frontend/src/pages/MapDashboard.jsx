@@ -147,28 +147,28 @@ export default function MapDashboard() {
       )}
 
       {/* Control Panel */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-950 rounded-xl shadow-md p-6 text-white">
-        <h2 className="text-lg font-bold mb-4">📱 Phone Tracking Control</h2>
+      <div className="bg-gradient-to-br from-gray-800 to-gray-800 sm hover:shadow-md transition-shadow border-2 border-yellow-500 p-6">
+        <h2 className="text-lg font-bold text-white text-center mb-4">Phone Tracking Control</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <button
             onClick={getCurrentLocation}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+            className="bg-blue-800 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-none transition-colors transition-shadow border-2 border-yellow-300 p-6"
           >
-            📍 Get Current Location
+            Get Current Location
           </button>
           {!tracking ? (
             <button
               onClick={startTracking}
-              className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+              className="bg-green-800 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-none transition-colors transition-shadow border-2 border-yellow-300 p-6"
             >
-              ▶️ Start Live Tracking
+              Start Live Tracking
             </button>
           ) : (
             <button
               onClick={stopTracking}
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-none transition-colors transition-shadow border-2 border-yellow-300 p-6"
             >
-              ⏹️ Stop Tracking
+              Stop Tracking
             </button>
           )}
         </div>

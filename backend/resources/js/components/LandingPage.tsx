@@ -5,15 +5,36 @@ import React from 'react';
  * Modern, enterprise-grade SaaS welcome page for Fleet Management System
  * Clean, professional design with white background and strong typography
  */
+
+// helper component that swaps video sources periodically
+const VideoSlideshow: React.FC = () => {
+  const videos = [
+    '/background-video/13197481_1920_1080_30fps.mp4',
+    '/background-video/recording%20%281%29.mp4', // second clip in backend/public/background-video
+  ];
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % videos.length);
+    }, 3000); // switch every 3 seconds
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <video autoPlay muted loop poster="/background-image/maxresdefault-3490897627.jpg" className="absolute inset-0 w-full h-full object-cover">
+      <source src={videos[index]} type="video/mp4" />
+    </video>
+  );
+};
+
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-screen">
-        {/* Background Video/Image */}
-        <video autoPlay muted loop poster="/background-image/maxresdefault-3490897627.jpg" className="absolute inset-0 w-full h-full object-cover">
-          <source src="/background-video/13197481_1920_1080_30fps.mp4" type="video/mp4" />
-        </video>
+        {/* Background Video/Image - alternate between two sources */}
+        <VideoSlideshow />
         {/* Optional overlay for better text readability */}
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
 

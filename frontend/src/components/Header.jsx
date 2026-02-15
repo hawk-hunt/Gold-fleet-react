@@ -251,11 +251,11 @@ export default function Header({ sidebarOpen, setSidebarOpen }) {
                 <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                   Profile
                 </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <a href="/change-password" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                   Change Password
                 </a>
                 <div className="border-t border-gray-100"></div>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <a href="/company-settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                   Company Settings
                 </a>
                 <div className="border-t border-gray-100"></div>

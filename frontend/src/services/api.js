@@ -4,6 +4,8 @@ const getAuthHeaders = () => {
   const token = sessionStorage.getItem('auth_token');
   return {
     'Authorization': token ? `Bearer ${token}` : '',
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
   };
 };
 

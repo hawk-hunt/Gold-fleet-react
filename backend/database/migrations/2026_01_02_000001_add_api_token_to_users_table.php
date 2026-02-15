@@ -16,7 +16,7 @@ return new class extends Migration
                 $table->string('api_token')->nullable()->unique()->after('email');
             }
             if (!Schema::hasColumn('users', 'company_id')) {
-                $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();
+                $table->unsignedBigInteger('company_id')->nullable()->after('role');
             }
         });
     }
@@ -27,9 +27,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropUnique(['api_token']);
-            $table->dropColumn('api_token');
-            $table->dropConstrainedForeignId('company_id');
+            if (Schema::hasColumn('users', 'api_token')) {
+                $table->dropUnique(['api_token']);
+                $table->dropColumn('api_token');
+            }
+            if (Schema::hasColumn('users', 'company_id')) {
+                $table->dropColumn('company_id');
+            }
         });
     }
 };

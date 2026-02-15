@@ -40,6 +40,8 @@ import ReminderForm from './pages/ReminderForm';
 import ReminderDetail from './pages/ReminderDetail';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import CompanySettingsPage from './pages/CompanySettingsPage';
 import './App.css';
 
 // Debug page to clear auth
@@ -140,6 +142,8 @@ function AppRoutes() {
       
       {/* Profile & Notifications */}
       <Route path="/profile" element={<ProtectedLayout><Profile /></ProtectedLayout>} />
+      <Route path="/change-password" element={<ProtectedLayout><ChangePasswordPage /></ProtectedLayout>} />
+      <Route path="/company-settings" element={<ProtectedLayout><CompanySettingsPage /></ProtectedLayout>} />
       <Route path="/notifications" element={<ProtectedLayout><Notifications /></ProtectedLayout>} />
 
       {/* Catch-all */}

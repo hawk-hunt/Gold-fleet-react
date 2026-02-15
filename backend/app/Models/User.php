@@ -25,6 +25,17 @@ class User extends Authenticatable
         'company_id',
         'api_token',
         'email_verified_at',
+        'company_name',
+        'company_email',
+        'company_phone',
+        'company_address',
+        'company_city',
+        'company_state',
+        'company_zip',
+        'company_country',
+        'company_registration_number',
+        'company_tax_id',
+        'company_website',
     ];
 
     /**

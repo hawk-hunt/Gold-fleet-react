@@ -65,6 +65,16 @@ Route::middleware('authorize.api.token')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit']);
     Route::patch('/profile', [ProfileController::class, 'update']);
     Route::delete('/profile', [ProfileController::class, 'destroy']);
+    
+    // Password and settings
+    Route::post('/user/change-password', [ProfileController::class, 'changePassword']);
+    Route::get('/company-settings', [ProfileController::class, 'getCompanySettings']);
+    Route::post('/company-settings', [ProfileController::class, 'updateCompanySettings']);
+    
+    // Team members
+    Route::get('/team-members', [ProfileController::class, 'getTeamMembers']);
+    Route::post('/team-members', [ProfileController::class, 'addTeamMember']);
+    Route::delete('/team-members/{userId}', [ProfileController::class, 'removeTeamMember']);
 
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead']);

@@ -6,22 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
+        // Add foreign key constraint after companies table is created
         Schema::table('users', function (Blueprint $table) {
-            // Only add if it doesn't already exist (to avoid duplicate column error)
-            if (!Schema::hasColumn('users', 'api_token')) {
-                $table->string('api_token', 80)->unique()->nullable()->after('password');
-            }
+            $table->foreign('company_id')->references('id')->on('companies')->cascadeOnDelete();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'api_token')) {
-                $table->dropColumn('api_token');
-            }
+            $table->dropForeign(['company_id']);
         });
     }
 };

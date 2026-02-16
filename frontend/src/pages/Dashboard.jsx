@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { Line } from 'react-chartjs-2';
+import { FaCar, FaUser, FaRoad, FaGasPump, FaTools, FaMapMarkerAlt, FaMoneyBillWave } from 'react-icons/fa';
+import StatCard from '../components/StatCard';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,6 +28,7 @@ ChartJS.register(
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const userName = user?.name || user?.company_name || 'Fleet Manager';
   const [stats, setStats] = useState(null);
   const [chartData, setChartData] = useState(null);
@@ -99,7 +103,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       {/* Error Display */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -125,199 +129,149 @@ export default function Dashboard() {
             <p className="mt-3 text-lg text-gray-600">Welcome back, {userName}! Here's your fleet overview.</p>
           </div>
 
-          {/* KPI Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Total Cost of Ownership */}
-            <div className="bg-white shadow-sm hover:shadow-md transition-shadow border-2 border-yellow-500 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Total Cost of Ownership</p>
-                  <p className="mt-2 text-3xl  text-gray-900">{formatCurrency(stats?.total_cost)}</p>
+          {/* Quick links summary cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8 px-4">
+            {[
+              { title: 'Vehicles', desc: 'View and manage vehicles', path: '/vehicles', icon: <FaCar /> },
+              { title: 'Drivers', desc: 'View and manage drivers', path: '/drivers', icon: <FaUser /> },
+              { title: 'Trips', desc: 'Track trip history', path: '/trips', icon: <FaRoad /> },
+              { title: 'Fuel Fillups', desc: 'Log fuel fillups', path: '/fuel-fillups', icon: <FaGasPump /> },
+              { title: 'Maintenance', desc: 'Schedule services', path: '/services', icon: <FaTools /> },
+              { title: 'Tracking', desc: 'Live vehicle map', path: '/map', icon: <FaMapMarkerAlt /> },
+              { title: 'Expenses', desc: 'Record expenses', path: '/expenses', icon: <FaMoneyBillWave /> },
+            ].map(item => (
+              <div
+                key={item.title}
+                onClick={() => navigate(item.path)}
+                className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer flex items-center space-x-4"
+              >
+                <div className="text-3xl text-yellow-600">
+                  {item.icon}
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-3xl font-bold text-gray-700">₵</span>
-                  <button
-                    onClick={() => toggleCard('tco')}
-                    className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                  >
-                    Details
-                  </button>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
                 </div>
               </div>
-              <p className="text-sm text-green-600 flex items-center mb-4">
-                <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                </svg>
-                ↑ {formatNumber(stats?.cost_increase_percent)}% vs last month
-              </p>
+            ))}
+          </div>
+
+          {/* KPI Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <StatCard
+              icon={<FaMoneyBillWave />}
+              title="Total Cost of Ownership"
+              value={formatCurrency(stats?.total_cost)}
+              description={`↑ ${formatNumber(stats?.cost_increase_percent)}% vs last month`}
+              onClick={() => toggleCard('tco')}
+            >
               {expandedCards.tco && (
                 <div className="pt-4 border-t border-gray-200 text-sm text-gray-600 space-y-2">
                   <p>Your total fleet operating costs for this year are <span className="font-semibold text-gray-900">{formatCurrency(stats?.total_cost)}</span>, with a <span className="text-green-600">↑ {formatNumber(stats?.cost_increase_percent)}% change</span> from last month.</p>
                   <p className="text-xs text-gray-500">This includes all fuel, maintenance, repairs, insurance, and operational expenses.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            {/* Total Expense */}
-            <div className="bg-white shadow-sm hover:shadow-md transition-shadow border-2 border-yellow-500 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Total Expense</p>
-                  <p className="mt-2 text-3xl  text-gray-900">{formatCurrency(stats?.total_expenses)}</p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-3xl font-bold text-gray-700">₵</span>
-                  <button
-                    onClick={() => toggleCard('expense')}
-                    className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                  >
-                    Details
-                  </button>
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">This month</p>
+            <StatCard
+              icon={<FaMoneyBillWave />}
+              title="Total Expense"
+              value={formatCurrency(stats?.total_expenses)}
+              description="This month"
+              onClick={() => toggleCard('expense')}
+            >
               {expandedCards.expense && (
                 <div className="pt-4 border-t border-gray-200 text-sm text-gray-600 space-y-2">
                   <p>Your total expenses for this month totalled <span className="font-semibold text-gray-900">{formatCurrency(stats?.total_expenses)}</span>.</p>
                   <p className="text-xs text-gray-500">This breaks down monthly expenses and helps track your operational spending patterns.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            {/* Avg MPG */}
-            <div className="bg-white shadow-sm hover:shadow-md transition-shadow border-2 border-yellow-500 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Avg MPG</p>
-                  <p className="mt-2 text-3xl font-extrabold text-gray-900">{formatNumber(stats?.avg_mpg, 1)}</p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <svg className="w-10 h-10 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2V7h2v10zm4 0h-2V9h2v8zm4 0h-2v-6h2v6z" />
-                  </svg>
-                  <button
-                    onClick={() => toggleCard('mpg')}
-                    className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                  >
-                    Details
-                  </button>
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">Fleet average</p>
+            <StatCard
+              icon={<FaRoad />}
+              title="Avg MPG"
+              value={formatNumber(stats?.avg_mpg, 1)}
+              description="Fleet average"
+              onClick={() => toggleCard('mpg')}
+            >
               {expandedCards.mpg && (
                 <div className="pt-4 border-t border-gray-200 text-sm text-gray-600 space-y-2">
                   <p>Your fleet is averaging <span className="font-semibold text-gray-900">{formatNumber(stats?.avg_mpg, 1)} miles per gallon</span>, indicating your overall fuel efficiency across all vehicles.</p>
                   <p className="text-xs text-gray-500">Higher MPG means better fuel economy and lower operational costs.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            {/* Vehicle Downtime */}
-            <div className="bg-white shadow-sm hover:shadow-md transition-shadow border-2 border-yellow-500 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-600">Vehicle Downtime</p>
-                  <p className="mt-2 text-3xl font-extrabold text-red-600">{formatNumber(stats?.downtime_days, 1)} days</p>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-100">
-                    <span className="text-lg font-bold text-red-600">!</span>
-                  </div>
-                  <button
-                    onClick={() => toggleCard('downtime')}
-                    className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                  >
-                    Details
-                  </button>
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 mb-4">Pending maintenance</p>
+            <StatCard
+              icon={<span className="text-red-600 font-bold">!</span>}
+              title="Vehicle Downtime"
+              value={`${formatNumber(stats?.downtime_days, 1)} days`}
+              description="Pending maintenance"
+              onClick={() => toggleCard('downtime')}
+            >
               {expandedCards.downtime && (
                 <div className="pt-4 border-t border-gray-200 text-sm text-gray-600 space-y-2">
                   <p>Your fleet currently has <span className="font-semibold text-gray-900">{formatNumber(stats?.downtime_days, 1)} days</span> of downtime, with <span className="font-semibold text-gray-900">{stats?.active_vehicles || 0}</span> vehicles operational.</p>
                   <p className="text-xs text-gray-500">Minimizing downtime ensures maximum fleet productivity and revenue generation.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
           </div>
 
           {/* Alert Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white shadow-sm p-4 hover:shadow-md transition-shadow border-2 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600 font-medium">Overdue Reminders</p>
-                <button
-                  onClick={() => toggleCard('overdue')}
-                  className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                >
-                  Details
-                </button>
-              </div>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stats?.overdue_reminders || 0}</p>
-              <p className="text-xs text-red-600 mt-2">Action required</p>
+            <StatCard
+              title="Overdue Reminders"
+              value={stats?.overdue_reminders || 0}
+              description="Action required"
+              onClick={() => toggleCard('overdue')}
+            >
               {expandedCards.overdue && (
                 <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-600 space-y-2">
                   <p>You have <span className="font-semibold text-gray-900">{stats?.overdue_reminders || 0}</span> overdue maintenance reminders that need immediate attention to prevent vehicle issues.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            <div className="bg-white shadow-sm p-4 hover:shadow-md transition-shadow border-2 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600 font-medium">Open Issues</p>
-                <button
-                  onClick={() => toggleCard('issues')}
-                  className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                >
-                  Details
-                </button>
-              </div>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stats?.open_issues || 0}</p>
-              <p className="text-xs text-blue-600 mt-2">Needs review</p>
+            <StatCard
+              title="Open Issues"
+              value={stats?.open_issues || 0}
+              description="Needs review"
+              onClick={() => toggleCard('issues')}
+            >
               {expandedCards.issues && (
                 <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-600 space-y-2">
                   <p>You have <span className="font-semibold text-gray-900">{stats?.open_issues || 0}</span> open vehicle issues currently pending resolution and review.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            <div className="bg-white shadow-sm p-4 hover:shadow-md transition-shadow border-2 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600 font-medium">Maintenance Queue</p>
-                <button
-                  onClick={() => toggleCard('queue')}
-                  className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                >
-                  Details
-                </button>
-              </div>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stats?.maintenance_queue || 0}</p>
-              <p className="text-xs text-yellow-600 mt-2">Scheduled</p>
+            <StatCard
+              title="Maintenance Queue"
+              value={stats?.maintenance_queue || 0}
+              description="Scheduled"
+              onClick={() => toggleCard('queue')}
+            >
               {expandedCards.queue && (
                 <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-600 space-y-2">
                   <p>You have <span className="font-semibold text-gray-900">{stats?.maintenance_queue || 0}</span> maintenance tasks scheduled for your fleet to keep vehicles in optimal condition.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
 
-            <div className="bg-white shadow-sm p-4 hover:shadow-md transition-shadow border-2 border-yellow-500">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-600 font-medium">Renewal Count</p>
-                <button
-                  onClick={() => toggleCard('renewal')}
-                  className="text-blue-600 hover:text-blue-800 text-xs font-medium"
-                >
-                  Details
-                </button>
-              </div>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stats?.renewal_count || 0}</p>
-              <p className="text-xs text-green-600 mt-2">Upcoming</p>
+            <StatCard
+              title="Renewal Count"
+              value={stats?.renewal_count || 0}
+              description="Upcoming"
+              onClick={() => toggleCard('renewal')}
+            >
               {expandedCards.renewal && (
                 <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-600 space-y-2">
                   <p>You have <span className="font-semibold text-gray-900">{stats?.renewal_count || 0}</span> upcoming renewals including vehicle registrations, insurance policies, and inspection certificates.</p>
                 </div>
               )}
-            </div>
+            </StatCard>
           </div>
 
           {/* Charts Section */}

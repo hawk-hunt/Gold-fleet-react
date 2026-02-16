@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Hero from '../components/Hero';
+import FleetImageCard from '../components/FleetImageCard';
+
 
 /**
  * LandingPage Component
@@ -42,6 +44,47 @@ const LandingPage = () => {
     <div className="w-full">
       <Hero />
 
+      {/* --- New split section with image & text content --- */}
+      <section className="mt-16 px-6 py-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
+          {/* left column: image card */}
+          <div className="w-full md:w-1/2">
+            <FleetImageCard
+              src="/images/pexels-silveremeya-7381783.jpg"
+              alt="Fleet management overview"
+            />
+          </div>
+
+          {/* right column: text content */}
+          <div className="w-full md:w-1/2 space-y-6">
+            <p className="text-sm font-semibold uppercase text-amber-600">
+              Optimize fleet operations
+            </p>
+            <h2 className="text-3xl font-bold text-gray-900">
+              Advanced fleet management software solutions
+            </h2>
+            <p className="text-gray-700">
+              Track vehicles in the field, improve fleet operations, increase
+              worker productivity and safe driving with Verizon Connect fleet
+              management solutions. Choose from a range of customizable GPS
+              tracking solutions that offer dashboards, reports and alerts.
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-gray-600">
+              <li>See driver and vehicle location in near real-time</li>
+              <li>Track driver behavior like speeding, idling and harsh driving</li>
+              <li>Reduce costs for vehicle maintenance and fuel consumption</li>
+              <li>Improve dispatch, routing and visibility</li>
+            </ul>
+            <a
+              href="#"
+              className="inline-block text-amber-600 font-semibold hover:text-amber-700"
+            >
+              GPS fleet tracking →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Value Proposition Section */}
       <section className="py-24 sm:py-32 bg-gradient-to-br from-yellow-50 to-amber-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -53,101 +96,63 @@ const LandingPage = () => {
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               {/* Feature Card 1 */}
-              <div className="flex flex-col items-center text-center">
-                {/* Icon Placeholder */}
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-yellow-600">
-                  <svg
-                    className="h-10 w-10 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 10.5c0 7.142-7.5 11.458-7.5 11.458s-7.5-4.316-7.5-11.458a7.5 7.5 0 1115 0z"
-                    />
-                  </svg>
+              <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#F4F1EA', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <img
+                  src="/images/howz-nguyen-AAhnWrD_8vk-unsplash.jpg"
+                  alt="Know where your vehicles are"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+                <div style={{ padding: '16px' }}>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '8px' }}>
+                    Know where your vehicles are 24/7
+                  </h3>
+                  <p style={{ fontSize: '1rem', color: '#4a5568', marginBottom: '12px' }}>
+                    Real-time vehicle tracking and live status updates
+                  </p>
+                  <a href="#" style={{ fontSize: '0.875rem', color: '#CA8A04', fontWeight: '600' }}>
+                    Vehicle tracking
+                  </a>
                 </div>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  Know where your vehicles are 24/7
-                </dt>
-                <dd className="mt-1 text-base leading-7 text-amber-700">
-                  Real-time vehicle tracking and live status updates
-                </dd>
-                <a
-                  className="mt-4 text-sm font-semibold leading-6 text-yellow-600 hover:text-yellow-700 transition-colors"
-                >
-                  Vehicle tracking <span aria-hidden="true"></span>
-                </a>
               </div>
 
               {/* Feature Card 2 */}
-              <div className="flex flex-col items-center text-center">
-                {/* Icon Placeholder */}
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-amber-600">
-                  <svg
-                    className="h-10 w-10 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+              <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#F4F1EA', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <img
+                  src="/images/pexels-enginakyurt-20500734.jpg"
+                  alt="Save up to 20% on fuel & maintenance"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+                <div style={{ padding: '16px' }}>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '8px' }}>
+                    Save up to 20% on fuel & maintenance
+                  </h3>
+                  <p style={{ fontSize: '1rem', color: '#4a5568', marginBottom: '12px' }}>
+                    Monitor and analyze driving behavior to reduce costs
+                  </p>
+                  <a href="#" style={{ fontSize: '0.875rem', color: '#CA8A04', fontWeight: '600' }}>
+                    Fleet optimization
+                  </a>
                 </div>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  Save up to 20% on fuel & maintenance
-                </dt>
-                <dd className="mt-1 text-base leading-7 text-amber-700">
-                  Monitor and analyze driving behavior to reduce costs
-                </dd>
-                <a
-                  className="mt-4 text-sm font-semibold leading-6 text-amber-600 hover:text-amber-700 transition-colors"
-                >
-                  Fleet optimization <span aria-hidden="true"></span>
-                </a>
               </div>
 
               {/* Feature Card 3 */}
-              <div className="flex flex-col items-center text-center">
-                {/* Icon Placeholder */}
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-yellow-700">
-                  <svg
-                    className="h-10 w-10 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                    />
-                  </svg>
+              <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#F4F1EA', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <img
+                  src="/images/pexels-mikebirdy-244822.jpg"
+                  alt="Easy integration with existing systems"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+                <div style={{ padding: '16px' }}>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '8px' }}>
+                    Easy integration with existing systems
+                  </h3>
+                  <p style={{ fontSize: '1rem', color: '#4a5568', marginBottom: '12px' }}>
+                    Seamlessly connects with current software and hardware
+                  </p>
+                  <a href="#" style={{ fontSize: '0.875rem', color: '#CA8A04', fontWeight: '600' }}>
+                    System integration
+                  </a>
                 </div>
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  Easy integration with existing systems
-                </dt>
-                <dd className="mt-1 text-base leading-7 text-amber-700">
-                  Seamlessly connects with current software and hardware
-                </dd>
-                <a
-                  className="mt-4 text-sm font-semibold leading-6 text-yellow-700 hover:text-yellow-800 transition-colors"
-                >
-                  System integration <span aria-hidden="true"></span>
-                </a>
               </div>
             </dl>
           </div>
@@ -167,61 +172,44 @@ const LandingPage = () => {
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-              {/* Feature Block 1 */}
-              <div className="flex flex-col items-center text-center">
-                {/* Icon Placeholder */}
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-600">
-                  <svg
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V11.535c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                    />
-                  </svg>
+              {/* Feature Block 1 - Route Optimization Card with Image */}
+              <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#F4F1EA', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <img
+                  src="/images/pexels-vladimirsrajber-21407450.jpg"
+                  alt="Route optimization and traffic-aware navigation"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+                <div style={{ padding: '16px' }}>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '8px' }}>
+                    Cut driving time & optimize routes
+                  </h3>
+                  <p style={{ fontSize: '1rem', color: '#4a5568', marginBottom: '12px' }}>
+                    Traffic-aware navigation and route optimization
+                  </p>
+                  <a href="#" style={{ fontSize: '0.875rem', color: '#CA8A04', fontWeight: '600' }}>
+                    Route optimization
+                  </a>
                 </div>
-                <dt className="text-lg font-semibold leading-7 text-gray-900">
-                  Cut driving time & optimize routes
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-amber-700">
-                  Traffic-aware navigation and route optimization
-                </dd>
               </div>
 
-              {/* Feature Block 2 */}
-              <div className="flex flex-col items-center text-center">
-                {/* Icon Placeholder */}
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-600">
-                  <svg
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-4.125 4.125c1.036 0 1.875.84 1.875 1.875v.75c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-.75c0-1.036.84-1.875 1.875-1.875h4.5z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.5 10.5h3m-3 3h3m-3 3h3m3-9h.008v.008H16.5V7.5z"
-                    />
-                  </svg>
+              {/* Feature Block 2 - Service Levels Card with Image */}
+              <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#F4F1EA', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <img
+                  src="/images/pexels-pavel-danilyuk-6407388.jpg"
+                  alt="Improve service levels with dynamic dispatching"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                />
+                <div style={{ padding: '16px' }}>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '8px' }}>
+                    Improve service levels
+                  </h3>
+                  <p style={{ fontSize: '1rem', color: '#4a5568', marginBottom: '12px' }}>
+                    Dynamic dispatching and real-time driver communication
+                  </p>
+                  <a href="#" style={{ fontSize: '0.875rem', color: '#CA8A04', fontWeight: '600' }}>
+                    Service optimization
+                  </a>
                 </div>
-                <dt className="text-lg font-semibold leading-7 text-gray-900">
-                  Improve service levels
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
-                  Dynamic dispatching and real-time driver communication
-                </dd>
               </div>
             </dl>
           </div>
